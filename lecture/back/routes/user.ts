@@ -1,18 +1,19 @@
 import * as express from 'express';
 import * as bcrypt from 'bcrypt';
+import { isLoggedIn, isNotLoggedIn } from './middleware';
 import User from '../models/user';
 
 const router = express.Router();
 
 // 회원 정보 가져오기
-router.get('/', (req, res) => {
-  const user = req.user.toJSON();
+router.get('/', isLoggedIn, (req, res) => {
+  const user = req.user!.toJSON() as User;
   delete user.password;
   return res.json(user);
 });
 
 // 회원 가입
-router.post('/', async (req, res, next) => {
+router.post('/', isNotLoggedIn, async (req, res, next) => {
   try {
     const exUser = await User.findOne({
       where: {
