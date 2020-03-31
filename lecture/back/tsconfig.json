@@ -5,4 +5,5 @@
     "moduleResolution": "node",
     "typeRoots": ["./types"]
   }
+  //  "files": ["./index.ts", "./types/index.ts"]
 }
